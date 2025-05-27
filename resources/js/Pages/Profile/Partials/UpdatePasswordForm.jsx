@@ -4,11 +4,16 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Eye, EyeOff, Lock, CheckCircle } from 'lucide-react';
 
 export default function UpdatePasswordForm({ className = '' }) {
     const passwordInput = useRef();
     const currentPasswordInput = useRef();
+    const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const {
         data,
@@ -45,98 +50,163 @@ export default function UpdatePasswordForm({ className = '' }) {
     };
 
     return (
-        <section className={className}>
+        <motion.section 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+        >
             <header>
-                <h2 className="text-lg font-medium text-gray-900">
+                <motion.h2 
+                    className="text-2xl font-bold text-green-900 flex items-center gap-2"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2 }}
+                >
+                    <Lock className="h-6 w-6" />
                     Update Password
-                </h2>
+                </motion.h2>
 
-                <p className="mt-1 text-sm text-gray-600">
-                    Ensure your account is using a long, random password to stay
-                    secure.
-                </p>
+                <motion.p 
+                    className="mt-2 text-sm text-green-700"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3 }}
+                >
+                    Ensure your account is using a long, random password to stay secure.
+                </motion.p>
             </header>
 
             <form onSubmit={updatePassword} className="mt-6 space-y-6">
-                <div>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                >
                     <InputLabel
                         htmlFor="current_password"
                         value="Current Password"
+                        className="text-green-900"
                     />
 
-                    <TextInput
-                        id="current_password"
-                        ref={currentPasswordInput}
-                        value={data.current_password}
-                        onChange={(e) =>
-                            setData('current_password', e.target.value)
-                        }
-                        type="password"
-                        className="mt-1 block w-full"
-                        autoComplete="current-password"
+                    <div className="relative">
+                        <TextInput
+                            id="current_password"
+                            ref={currentPasswordInput}
+                            value={data.current_password}
+                            onChange={(e) => setData('current_password', e.target.value)}
+                            type={showCurrentPassword ? 'text' : 'password'}
+                            className="mt-1 block w-full bg-green-50 border-green-200 focus:border-green-400 focus:ring-green-400"
+                            autoComplete="current-password"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-green-600 hover:text-green-800 transition-colors"
+                        >
+                            {showCurrentPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </button>
+                    </div>
+
+                    <InputError message={errors.current_password} className="mt-2" />
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                >
+                    <InputLabel
+                        htmlFor="password"
+                        value="New Password"
+                        className="text-green-900"
                     />
 
-                    <InputError
-                        message={errors.current_password}
-                        className="mt-2"
-                    />
-                </div>
-
-                <div>
-                    <InputLabel htmlFor="password" value="New Password" />
-
-                    <TextInput
-                        id="password"
-                        ref={passwordInput}
-                        value={data.password}
-                        onChange={(e) => setData('password', e.target.value)}
-                        type="password"
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                    />
+                    <div className="relative">
+                        <TextInput
+                            id="password"
+                            ref={passwordInput}
+                            value={data.password}
+                            onChange={(e) => setData('password', e.target.value)}
+                            type={showNewPassword ? 'text' : 'password'}
+                            className="mt-1 block w-full bg-green-50 border-green-200 focus:border-green-400 focus:ring-green-400"
+                            autoComplete="new-password"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowNewPassword(!showNewPassword)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-green-600 hover:text-green-800 transition-colors"
+                        >
+                            {showNewPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </button>
+                    </div>
 
                     <InputError message={errors.password} className="mt-2" />
-                </div>
+                </motion.div>
 
-                <div>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                >
                     <InputLabel
                         htmlFor="password_confirmation"
                         value="Confirm Password"
+                        className="text-green-900"
                     />
 
-                    <TextInput
-                        id="password_confirmation"
-                        value={data.password_confirmation}
-                        onChange={(e) =>
-                            setData('password_confirmation', e.target.value)
-                        }
-                        type="password"
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                    />
+                    <div className="relative">
+                        <TextInput
+                            id="password_confirmation"
+                            value={data.password_confirmation}
+                            onChange={(e) => setData('password_confirmation', e.target.value)}
+                            type={showConfirmPassword ? 'text' : 'password'}
+                            className="mt-1 block w-full bg-green-50 border-green-200 focus:border-green-400 focus:ring-green-400"
+                            autoComplete="new-password"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-green-600 hover:text-green-800 transition-colors"
+                        >
+                            {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </button>
+                    </div>
 
-                    <InputError
-                        message={errors.password_confirmation}
-                        className="mt-2"
-                    />
-                </div>
+                    <InputError message={errors.password_confirmation} className="mt-2" />
+                </motion.div>
 
-                <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
-
-                    <Transition
-                        show={recentlySuccessful}
-                        enter="transition ease-in-out"
-                        enterFrom="opacity-0"
-                        leave="transition ease-in-out"
-                        leaveTo="opacity-0"
+                <motion.div 
+                    className="flex items-center gap-4"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.7 }}
+                >
+                    <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className={`bg-gradient-to-br from-green-950 via-green-900 to-green-950 inline-flex items-center px-4 py-2 rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-800 focus:bg-green-800 active:bg-green-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150 ${
+                            processing && 'opacity-75'
+                        }`}
+                        disabled={processing}
                     >
-                        <p className="text-sm text-gray-600">
-                            Saved.
-                        </p>
-                    </Transition>
-                </div>
+                        {processing ? 'Saving...' : 'Save'}
+                    </motion.button>
+
+                    <AnimatePresence>
+                        {recentlySuccessful && (
+                            <motion.span
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: 10 }}
+                                className="text-green-600 flex items-center gap-1"
+                            >
+                                <CheckCircle className="w-5 h-5" />
+                                Saved successfully
+                            </motion.span>
+                        )}
+                    </AnimatePresence>
+                </motion.div>
             </form>
-        </section>
+        </motion.section>
     );
 }

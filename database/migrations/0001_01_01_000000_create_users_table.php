@@ -17,6 +17,13 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('image')->nullable();
+            $table->string('qrcode')->nullable();
+            $table->string('studentNo')->nullable()->unique();
+            $table->string('year')->nullable();
+            $table->string('section')->nullable();
+            $table->string('rfid')->nullable();
+            $table->enum('role', ['admin', 'secretary', 'student'])->default('student');
             $table->rememberToken();
             $table->timestamps();
         });

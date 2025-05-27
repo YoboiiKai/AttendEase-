@@ -1,3 +1,6 @@
+import AdminLayout from './AdminLayout';
+import SecretaryLayout from './SecretaryLayout';
+import StudentLayout from './StudentLayout';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
@@ -6,8 +9,21 @@ import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
 export default function AuthenticatedLayout({ header, children }) {
-    const user = usePage().props.auth.user;
+    const { user } = usePage().props.auth;
 
+    if (user.isAdmin) {
+        return <AdminLayout header={header}>{children}</AdminLayout>;
+    }
+
+    if (user.isSecretary) {
+        return <SecretaryLayout header={header}>{children}</SecretaryLayout>;
+    }
+
+    if (user.isStudent) {
+        return <StudentLayout header={header}>{children}</StudentLayout>;
+    }
+
+    // Fallback layout if no specific role matches (shouldn't happen with our current setup)
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 

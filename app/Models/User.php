@@ -15,18 +15,26 @@ class User extends Authenticatable
     /**
      * The attributes that are mass assignable.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $fillable = [
         'name',
         'email',
         'password',
+        'studentNo',
+        'year',
+        'section',
+        'rfid',
+        'image',
+        'fingerprint',
+        'qrcode',
+        'role'
     ];
 
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -44,5 +52,18 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+    public function isSecretary(): bool
+    {
+        return $this->role === 'secretary';
+    }
+    public function isStudent(): bool
+    {
+        return $this->role === 'student';
     }
 }

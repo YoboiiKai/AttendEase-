@@ -6,6 +6,7 @@
         "dev": "vite"
     },
     "devDependencies": {
+        "@babel/plugin-proposal-decorators": "^7.25.9",
         "@headlessui/react": "^2.0.0",
         "@inertiajs/react": "^2.0.0",
         "@tailwindcss/forms": "^0.5.3",
@@ -19,5 +20,37 @@
         "react-dom": "^18.2.0",
         "tailwindcss": "^3.2.1",
         "vite": "^6.0.11"
+    },
+    "dependencies": {
+        "@radix-ui/react-slot": "^1.2.3",
+        "@radix-ui/react-tabs": "^1.1.12",
+        "antd": "^5.24.2",
+        "buffer": "^6.0.3",
+        "chart.js": "^4.4.8",
+        "class-variance-authority": "^0.7.1",
+        "clsx": "^2.1.1",
+        "docx": "^9.3.0",
+        "docx-templates": "^4.14.1",
+        "docxtemplater": "^3.61.1",
+        "file-saver": "^2.0.5",
+        "framer-motion": "^12.4.7",
+        "html5-qrcode": "^2.3.8",
+        "jspdf": "^3.0.1",
+        "jspdf-autotable": "^5.0.2",
+        "jsqr": "^1.4.0",
+        "lucide-react": "^0.475.0",
+        "papaparse": "^5.5.2",
+        "pizzip": "^3.1.8",
+        "react-chartjs-2": "^5.3.0",
+        "react-hot-toast": "^2.5.2",
+        "react-image-file-resizer": "^0.4.8",
+        "react-qr-code": "^2.0.15",
+        "react-qr-reader": "^3.0.0-beta-1",
+        "react-qr-scanner": "^1.0.0-alpha.11",
+        "react-toastify": "^11.0.5",
+        "recharts": "^2.15.3",
+        "sweetalert2": "^11.17.2",
+        "tailwind-merge": "^3.3.0",
+        "xlsx": "^0.18.5"
     }
 }
